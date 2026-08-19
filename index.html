@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicto</title>
+  <style>
+    :root { --bg: linear-gradient(135deg, #0d0415, #05010a); --accent: #8b5cf6; --border: 1px solid #3b2a56; }
+    body { margin: 0; background: var(--bg); color: #f3e8ff; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
+    .mono { font-family: 'Courier New', monospace; }
+    .container { width: 90%; max-width: 400px; padding: 20px; border: var(--border); background: #0c0517; text-align: center; }
+    .slide { display: none; }
+    .slide.active { display: block; }
+    .btn { background: var(--accent); color: #fff; border: none; padding: 12px 24px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; }
+    input { background: #0d0415; border: var(--border); color: #fff; width: 100%; padding: 10px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="slides">
+      <div class="slide active" id="s1">
+        <h1>Predicto</h1>
+        <p class="mono">Ask anything. Get the raw, brutal, honest truth.</p>
+        <button class="btn" onclick="go(2)">Next</button>
+      </div>
+      <div class="slide" id="s2">
+        <h2>Ready?</h2>
+        <p>Your first prediction is one tap away.</p>
+        <button class="btn" onclick="go('home')">Get Started</button>
+      </div>
+    </div>
+    <div id="home" class="slide">
+      <h2 class="mono">PREDICTO TERMINAL</h2>
+      <input type="text" id="question" placeholder="Ask your question here...">
+      <button class="btn" onclick="ask()">Submit Question</button>
+    </div>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    
+    const firebaseConfig = {
+      projectId: "predicto-b2c51",
+      appId: "940357674989"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    window.go = (id) => {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const target = id === 'home' ? document.getElementById('home') : document.getElementById('s' + id);
+      target.classList.add('active');
+    };
+
+    window.ask = () => {
+      const q = document.getElementById('question').value;
+      alert("Consulting Predicto about: " + q);
+    };
+  </script>
+</body>
+</html>
 
